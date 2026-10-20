@@ -1,0 +1,182 @@
+/* ===== Be Zen Studio — styles ===== */
+
+/* 1. Colours and fonts in one place, so they are easy to change */
+:root {
+  --orange: #F2782A;
+  --cream: #F7E4E0;
+  --pink: #F49AC0;
+  --teal: #3AA6B4;
+  --lilac: #B86AF0;
+  --deep: #2A0E36;
+  --title-font: 'Questrial', 'Prompt', 'Century Gothic', sans-serif;
+  --body-font: 'Cinzel', 'Prompt', Georgia, serif;   /* Prompt is only used for Thai letters */
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: #6C1A3C; }
+
+/* 2. The whole page: wine gradient behind everything */
+.site {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  isolation: isolate;
+  color: var(--orange);
+  font-family: var(--body-font);
+  text-shadow: 0 1px 14px rgba(40, 0, 20, 0.35);
+  background: linear-gradient(180deg, #4A1238 0%, #6C1A3C 32%, #7A1E42 58%, #5E1A48 82%, #3E1640 100%);
+}
+.site a { color: inherit; }
+
+/* moving crystals (drawn by script.js) and film grain on top */
+.bg-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -2; mix-blend-mode: screen; pointer-events: none; }
+.grain { position: fixed; inset: 0; z-index: -1; mix-blend-mode: overlay; opacity: 0.12; pointer-events: none; }
+
+/* 3. Top bar */
+.topbar { position: absolute; left: 0; right: 0; top: 0; z-index: 30; padding: 24px 28px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.brand-wrap { display: flex; flex-direction: column; gap: 10px; }
+.brand { text-decoration: none; font-weight: 700; font-size: 16px; letter-spacing: 0.5px; color: var(--cream) !important; }
+.langs { display: flex; gap: 6px; }
+.lang { font: inherit; font-size: 13px; font-weight: 600; color: var(--cream); background: none; border: none; padding: 2px 4px; cursor: pointer; opacity: 0.75; text-shadow: inherit; }
+.lang[data-active="true"] { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+
+.menu-btn { width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid var(--cream); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; color: var(--cream); }
+.burger { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.burger span { display: block; width: 24px; height: 2px; background: var(--cream); border-radius: 2px; }
+.burger span:last-child { width: 16px; }
+.close { display: none; font-size: 26px; line-height: 1; }
+.site[data-menu="true"] .burger { display: none; }
+.site[data-menu="true"] .close { display: block; }
+
+/* 4. Pages: only the active one is shown */
+.page { display: none; min-height: 100vh; padding: 150px 28px 64px; max-width: 1200px; margin: 0 auto; flex-direction: column; animation: rise 0.6s ease both; }
+.site[data-page="home"] .page-home,
+.site[data-page="classes"] .page-classes,
+.site[data-page="pricing"] .page-pricing,
+.site[data-page="schedule"] .page-schedule,
+.site[data-page="retreats"] .page-retreats,
+.site[data-page="about"] .page-about,
+.site[data-page="contact"] .page-contact { display: flex; }
+.site[data-menu="true"] .page { display: none; }
+
+.title { margin: 0 0 20px; font-family: var(--title-font); font-weight: 500; font-size: clamp(56px, 9vw, 120px); line-height: 0.9; }
+.title.big { font-size: clamp(80px, 12vw, 170px); line-height: 0.88; }
+.intro { margin: 0 0 36px; max-width: 640px; font-size: 17px; line-height: 1.6; color: var(--cream); }
+.note, .small { color: var(--cream); }
+.note { margin: 24px 0 0; font-size: 16px; }
+.small { margin: 12px 0 0; font-size: 12px; letter-spacing: 0.5px; opacity: 0.8; }
+.eyebrow { margin: 0; font-weight: 600; font-size: 15px; letter-spacing: 1px; color: var(--cream); }
+
+.btn-dark { align-self: center; margin-top: 32px; font: inherit; font-weight: 700; font-size: 15px; letter-spacing: 1px; background: var(--deep); color: var(--cream); border: none; border-radius: 999px; padding: 15px 28px; text-shadow: none; cursor: pointer; transition: transform 0.25s, background 0.25s; }
+.btn-dark:hover { transform: translateY(-3px); background: #3E1650; }
+
+/* 5. Home: name stacked top to bottom, with two glowing rings */
+.page-home { align-items: center; justify-content: center; gap: 24px; padding-top: 120px; position: relative; max-width: none; }
+.hero { display: flex; justify-content: center; align-items: center; gap: clamp(14px, 5vw, 90px); }
+.hero-side { margin: 0; font-weight: 600; font-size: clamp(14px, 1.4vw, 19px); letter-spacing: 2px; color: var(--cream); }
+.hero-left { text-align: right; }
+.hero-name { margin: 0; font-family: var(--title-font); font-weight: 500; font-size: min(11vw, 10.5vh); line-height: 0.9; display: flex; flex-direction: column; align-items: center; text-shadow: 0 2px 24px rgba(40, 20, 120, 0.35); }
+.hero-name .gap { height: 0.35em; }
+.hero-tag { margin: 0; max-width: 560px; text-align: center; font-size: clamp(16px, 1.5vw, 20px); line-height: 1.5; font-weight: 600; color: var(--cream); }
+.page-home .btn-dark { margin-top: 4px; }
+.ring { position: absolute; width: min(760px, 120vw); height: min(760px, 120vw); top: 50%; transform: translateY(-50%); border-radius: 50%; background: radial-gradient(circle, transparent 50%, rgba(58,166,180,0.85) 56%, #F26A1E 62%, var(--pink) 68%, rgba(184,106,240,0.5) 74%, transparent 80%); filter: blur(5px); z-index: -1; pointer-events: none; }
+.ring-left { right: calc(50% + clamp(100px, 13vw, 210px)); }
+.ring-right { left: calc(50% + clamp(100px, 13vw, 210px)); }
+
+/* 6. Cards (classes and retreats) */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+.card { background: rgba(255, 255, 255, 0.1); border: 1.5px solid rgba(247, 228, 224, 0.55); border-radius: 22px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: transform 0.3s cubic-bezier(.2,.9,.3,1.4), box-shadow 0.3s; }
+.card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(242, 106, 30, 0.3); }
+.card-dot { width: 42px; height: 42px; border-radius: 50%; background: radial-gradient(circle, transparent 46%, var(--teal) 52%, var(--orange) 62%, var(--pink) 72%, transparent 80%); }
+.card h3 { margin: 0; font-family: var(--title-font); font-weight: 500; font-size: 32px; line-height: 1; }
+.card .meta { margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 1px; color: var(--pink); }
+.card .desc { margin: 0; font-size: 16px; line-height: 1.55; color: var(--cream); }
+.card .price { margin: 6px 0 0; font-weight: 700; font-size: 18px; }
+
+/* 7. Pricing rows */
+.rows { border-top: 1.5px solid rgba(247, 228, 224, 0.55); }
+.row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 10px 32px; padding: 24px 0; border-bottom: 1.5px solid rgba(247, 228, 224, 0.55); }
+.row h3 { margin: 0; flex: 1 1 220px; font-family: var(--title-font); font-weight: 500; font-size: 34px; }
+.row p { margin: 0; flex: 2 1 300px; font-size: 16px; line-height: 1.55; color: var(--cream); }
+.row .amount { flex: 0 0 auto; font-family: var(--title-font); font-size: 30px; color: var(--orange); }
+
+.price-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; margin-bottom: 20px; }
+.price-head .title { margin-bottom: 0; }
+.currency { display: flex; gap: 6px; padding: 5px; border: 1.5px solid rgba(247, 228, 224, 0.5); border-radius: 999px; margin-bottom: 10px; }
+.cur { font: inherit; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; color: var(--cream); background: transparent; border: none; border-radius: 999px; padding: 9px 16px; cursor: pointer; text-shadow: none; transition: background 0.2s, transform 0.2s; }
+.cur:hover { transform: scale(1.06); background: rgba(255, 255, 255, 0.1); }
+.cur[data-active="true"] { background: var(--orange); color: var(--deep); }
+
+/* 8. Weekly schedule */
+.week { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+.day { background: rgba(255, 255, 255, 0.08); border-radius: 18px; padding: 14px 10px; display: flex; flex-direction: column; gap: 8px; }
+.day h3 { margin: 0 0 4px; text-align: center; font-family: var(--title-font); font-weight: 500; font-size: 22px; }
+.slot { font: inherit; text-align: left; font-size: 12px; line-height: 1.35; color: var(--cream); background: transparent; border: 1.5px solid rgba(247, 228, 224, 0.45); border-radius: 12px; padding: 8px 10px; cursor: pointer; text-shadow: none; transition: transform 0.2s, background 0.2s; }
+.slot b { display: block; font-size: 13px; color: var(--orange); }
+.slot:hover { transform: scale(1.05); background: rgba(255, 255, 255, 0.12); }
+.slot[data-sel="true"] { background: var(--orange); border-color: var(--orange); color: var(--deep); }
+.slot[data-sel="true"] b { color: var(--deep); }
+
+/* 9. Booking form */
+.booking { margin-top: 36px; background: rgba(42, 14, 54, 0.45); border: 1.5px solid rgba(247, 228, 224, 0.4); border-radius: 26px; padding: 28px; display: flex; flex-direction: column; gap: 18px; }
+.form-title { margin: 0; font-family: var(--title-font); font-weight: 500; font-size: 36px; }
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.fields label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; letter-spacing: 1px; color: var(--cream); }
+.fields input, .fields select { font: 16px var(--body-font); color: var(--cream); background: rgba(255, 255, 255, 0.08); border: 1.5px solid rgba(247, 228, 224, 0.5); border-radius: 12px; padding: 12px 14px; }
+.fields select option { color: #2A0E36; }
+.fields input:focus, .fields select:focus { outline: 2px solid var(--orange); outline-offset: 2px; }
+.levels { border: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 22px; color: var(--cream); font-size: 15px; }
+.levels legend { padding: 0; margin-bottom: 8px; font-size: 13px; font-weight: 600; letter-spacing: 1px; }
+.levels input { accent-color: var(--orange); }
+.booking .btn-dark { align-self: flex-start; margin-top: 4px; }
+.thanks { display: none; margin: 0; font-size: 18px; font-weight: 700; color: var(--cream); }
+.site[data-booked="true"] .thanks { display: block; }
+
+/* 10. About + teachers */
+.about-text { max-width: 760px; }
+.about-text p { margin: 0 0 16px; font-size: 18px; line-height: 1.7; color: var(--cream); }
+.page-about .form-title { margin-top: 24px; }
+.team { display: flex; flex-wrap: wrap; gap: 32px; margin-top: 20px; }
+.teacher { text-align: center; }
+.avatar { width: 130px; height: 130px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--title-font); font-size: 52px; color: var(--cream); background: radial-gradient(circle, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 56%, var(--teal) 62%, #F26A1E 67%, var(--pink) 72%, transparent 78%); }
+.t-name { margin: 10px 0 2px; font-weight: 700; font-size: 18px; }
+.t-role { margin: 0; font-size: 13px; color: var(--cream); }
+
+/* 11. Contact */
+.page-contact { align-items: center; justify-content: center; text-align: center; gap: 20px; }
+.pill { text-decoration: none; background: var(--orange); color: var(--deep) !important; border-radius: 999px; padding: 16px 30px; font-weight: 700; font-size: 18px; text-shadow: none; }
+.addr { font-style: normal; font-size: 16px; line-height: 1.7; color: var(--cream); }
+.social { display: flex; gap: 22px; font-weight: 600; font-size: 15px; }
+.social a { text-decoration: none; color: var(--cream); }
+
+/* 12. Menu: circles that bloom like crystals */
+.menu { display: none; position: absolute; inset: 0; min-height: 100vh; z-index: 20; background: rgba(60, 14, 44, 0.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); align-items: center; justify-content: center; padding: 120px 24px 40px; animation: fade 0.35s ease both; }
+.site[data-menu="true"] .menu { display: flex; }
+.menu-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(14px, 3vw, 36px); max-width: 1100px; }
+.bloom-wrap { display: block; animation: bloom 0.7s cubic-bezier(.2,.9,.3,1.2) both; animation-delay: var(--d); }
+.bloom { width: clamp(130px, 17vw, 200px); aspect-ratio: 1 / 1; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 700; font-size: clamp(17px, 1.8vw, 23px); letter-spacing: 1px; color: var(--orange); background: radial-gradient(circle, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 56%, var(--ring) 62%, #F26A1E 66%, var(--ring) 70%, transparent 76%); transition: transform 0.28s cubic-bezier(.2,.9,.3,1.5), filter 0.28s; }
+.bloom:hover, .bloom:focus-visible { transform: scale(1.14) rotate(-3deg); filter: brightness(1.2) drop-shadow(0 10px 26px rgba(242, 106, 30, 0.55)); }
+
+@keyframes bloom { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+/* 12b. Photos */
+.split { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 32px 48px; margin-bottom: 36px; }
+.split-text { flex: 1 1 420px; min-width: 0; }
+.split-text .intro { margin-bottom: 0; }
+.photo { display: block; flex: 0 1 300px; width: 100%; max-width: 300px; object-fit: cover; box-shadow: 0 24px 60px rgba(20, 0, 30, 0.45); }
+.photo.arch { aspect-ratio: 4 / 5; border-radius: 999px 999px 22px 22px; object-position: 50% 40%; }
+.photo.oval { aspect-ratio: 4 / 5; border-radius: 50%; object-position: 50% 45%; }
+.contact-bg { display: none; position: absolute; inset: 0; z-index: -3; background-size: cover; background-position: 50% 35%; }
+.site[data-page="contact"] .contact-bg { display: block; }
+.site[data-menu="true"] .contact-bg { display: none; }
+
+/* 13. Phones */
+@media (max-width: 600px) {
+  .page { padding: 130px 18px 48px; }
+  .hero-side { font-size: 12px; letter-spacing: 1px; }
+  .booking { padding: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
